@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+    <servlet>
+        <servlet-name>processUpload</servlet-name>
+        <servlet-class>com.myBlaire.action.ProcessUpload</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>processUpload</servlet-name>
+        <url-pattern>/processUpload.servlet</url-pattern>
+    </servlet-mapping>
+    
+<!--  
+	<filter>
+		<filter-name>osCache</filter-name>
+		<filter-class>com.opensymphony.oscache.web.filter.CacheFilter</filter-class>
+
+		<init-param>
+			<param-name>time</param-name>
+			<param-value>3600</param-value>
+		</init-param>
+		<init-param>
+			<param-name>scope</param-name>
+			<param-value>application</param-value>
+		</init-param>
+		<init-param>
+			<param-name>EntryRefreshPolicy</param-name>
+			<param-value>com.myBlaire.cache</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>osCache</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+-->
+
+
+
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+
+	<!-- 加载beans.xml文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- 加载单个xml文件 -->
+		<!-- <param-value>/WEB-INF/beans.xml</param-value> -->
+		<!-- 同时加载俩个 或更多 -->
+		<!--
+			<param-value>/WEB-INF/application-Context-data.xml
+			/WEB-INF/applicationContext-App.xml</param-value>
+		-->
+		<!-- 通配加载xml文件 -->
+		<param-value>/WEB-INF/beanContext-*.xml</param-value>
+		<!-- 加载类路径下的xml文件 -->
+		<!-- <param-value>classpath:beans.xml</param-value> -->
+		<!-- 用beans.xml加载hibernatecfg.xml -->
+		<!-- <param-value>/WEB-INF/bean-hibernateCfg.xml</param-value> -->
+	</context-param>
+	<!-- 加载spring监听 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<!--
+		OpenSessionInViewFilter是Spring提供的一个针对Hibernate的一个支持类，其主要意思是在发起一个页面请求时打开Hibernate的Session，一直保持这个Session，直到这个请求结束，具体是通过一个Filter来实现的。
+	-->
+	<filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- proxool 连接池Admin配置 -->
+	<servlet>
+		<description>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</description>
+		<servlet-name>proxoolAdmin</servlet-name>
+		<servlet-class>alex.pfms.proxool.ProxoolAdminServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>proxoolAdmin</servlet-name>
+		<url-pattern>/proxoolAdmin.servlet</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

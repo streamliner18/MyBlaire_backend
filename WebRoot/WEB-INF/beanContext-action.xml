@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- - Application context definition for JPetStore's business layer. - Contains 
+	bean references to the transaction manager and to the DAOs in - dataAccessContext-local/jta.xml 
+	(see web.xml's "contextConfigLocation"). -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- action -->
+	
+	<bean id="checkUserInterceptor" class="com.myBlaire.interceptor.CheckUserInterceptor" scope="prototype">
+	</bean>
+	<bean id="appInterceptor" class="com.myBlaire.interceptor.AppInterceptor" scope="prototype">
+	</bean>
+	<bean name="sysLoginAction" class="com.myBlaire.action.SysLoginAction" scope="prototype">
+		<property name="sysUserService" ref="sysUserService"></property>
+	</bean>
+	<bean name="sysDictAction" class="com.myBlaire.action.SysDictAction" scope="prototype">
+		<property name="dictService" ref="dictService"></property>
+	</bean>
+	<bean name="keywordAction" class="com.myBlaire.action.KeywordAction" scope="prototype">
+		<property name="keywordService" ref="keywordService"></property>
+	</bean>
+	<bean name="tUserAction" class="com.myBlaire.action.TUserAction" scope="prototype">
+		<property name="tUserService" ref="tUserService"></property>
+	</bean>
+	<bean name="tGoodsAction" class="com.myBlaire.action.TGoodsAction" scope="prototype">
+		<property name="tGoodsService" ref="tGoodsService"></property>
+	</bean>
+	<bean  name="uploadAction" class="com.myBlaire.action.UploadAction" scope="prototype">
+	</bean>
+	<bean name="tFeedbackAction" class="com.myBlaire.action.TFeedbackAction" scope="prototype">
+		<property name="tFeedbackService" ref="tFeedbackService"></property>
+	</bean>
+	<bean name="userNormalOperationAction" class="com.myBlaire.appAction.UserNormalOperationAction" scope="prototype">
+		<property name="tUserService" ref="tUserService"></property>
+	</bean>
+	<bean name="userAppInterfaceAction" class="com.myBlaire.appAction.UserAppInterfaceAction" scope="prototype">
+		<property name="appInterfaceService" ref="appInterfaceService"></property>
+	</bean>
+</beans>

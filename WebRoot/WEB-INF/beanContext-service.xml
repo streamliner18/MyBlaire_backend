@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- - Application context definition for JPetStore's business layer. - Contains 
+	bean references to the transaction manager and to the DAOs in - dataAccessContext-local/jta.xml 
+	(see web.xml's "contextConfigLocation"). -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- service -->
+	<bean name="sysUserService" class="com.myBlaire.service.impl.SysUserServiceImpl">
+		<property name="sysUserDao" ref="sysUserDao"></property>
+	</bean>
+	<bean name="dictService" class="com.myBlaire.service.impl.SysDictServiceImpl">
+		<property name="dictDao" ref="dictDao"></property>
+	</bean>
+	<bean name="keywordService" class="com.myBlaire.service.impl.KeywordServiceImpl">
+		<property name="keywordDao" ref="keywordDao"></property>
+	</bean>
+	<bean name="tUserService" class="com.myBlaire.service.impl.TUserServiceImpl">
+		<property name="tUserDao" ref="tUserDao"></property>
+	</bean>
+	<bean name="tGoodsService" class="com.myBlaire.service.impl.TGoodsServiceImpl">
+		<property name="tGoodsDao" ref="tGoodsDao"></property>
+	</bean>
+	<bean name="tFeedbackService" class="com.myBlaire.service.impl.TFeedbackServiceImpl">
+		<property name="tFeedbackDao" ref="tFeedbackDao"></property>
+	</bean>
+	<bean name="appInterfaceService" class="com.myBlaire.service.impl.AppInterfaceServiceImpl">
+		<property name="appInterfaceDao" ref="appInterfaceDao"></property>
+	</bean>
+</beans>

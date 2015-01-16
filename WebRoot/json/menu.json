@@ -1,0 +1,12 @@
+[
+		{ "id":"11", "pid":"0", "name":"商品管理"},
+		{ "id":"112", "pid":"11", "name":"商品列表",  "page":"page?module=goods&resource=pageList"},
+		{ "id":"12", "pid":"0", "name":"用户管理"},
+		{ "id":"121", "pid":"12", "name":"用户列表" ,"page":"page.do?module=user&resource=pageList"},
+		{ "id":"13", "pid":"0", "name":"字典管理"},
+		{ "id":"131", "pid":"13", "name":"字典列表","page":"page.do?module=dict&resource=pageList"},
+		{ "id":"132", "pid":"13", "name":"关键字管理","page":"page.do?module=keyword&resource=pageList"},
+		{ "id":"14", "pid":"0", "name":"吐槽管理"},
+		{ "id":"141", "pid":"14", "name":"意见反馈","page":"page.do?module=appfeedback&resource=pageList"}
+		
+]

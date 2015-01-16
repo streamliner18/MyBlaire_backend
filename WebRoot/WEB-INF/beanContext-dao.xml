@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	  - Application context definition for JPetStore's business layer.
+	  - Contains bean references to the transaction manager and to the DAOs in
+	  - dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+	  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		
+	
+	<!-- dao -->
+	<bean name="baseDao" class="com.myBlaire.dao.impl.BaseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="sysUserDao" class="com.myBlaire.dao.impl.SysUserDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	<bean name="dictDao" class="com.myBlaire.dao.impl.SysDictDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	<bean name="keywordDao" class="com.myBlaire.dao.impl.KeywordDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	<bean name="tUserDao" class="com.myBlaire.dao.impl.TUserDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	<bean name="tGoodsDao" class="com.myBlaire.dao.impl.TGoodsDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	<bean name="tFeedbackDao" class="com.myBlaire.dao.impl.TFeedbackDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	<bean name="appInterfaceDao" class="com.myBlaire.dao.impl.AppInterfaceDaoImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+</beans>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"./struts-2.1.dtd">
+
+<struts>
+	<!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开  -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+
+	<!--上传文件的大小限制-->
+	<constant name="struts.multipart.maxSize" value="1572864000000000" />
+	<!-- 开发模式下使用,这样可以打印出更详细的错误信息 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 该属性设置Struts 2是否支持动态方法调用，该属性的默认值是true。如果需要关闭动态方法调用，则可设置该属性为false。-->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!--
+		指定默认编码集,作用于HttpServletRequest的setCharacterEncoding方法 和freemarker
+		、velocity的输出
+	-->
+	<constant name="struts.custom.i18n.resources" value="UTF-8"></constant>
+	<constant name="struts.action.extension" value=",action,do,edit,save" />
+	<!--
+		上传文件的大小限制 <constant name="struts.multipart.maxSize" value="10701096"/>
+	-->
+	<bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest"
+		name="myRequestParser" class="com.myBlaire.action.RequestParseWrapper"
+		scope="default" optional="true " />
+	<constant name="struts.multipart.parser" value="myRequestParser" />
+
+	<package name="default" extends="struts-default" abstract="true">
+
+		<interceptors>
+			<interceptor name="checkUser" class="checkUserInterceptor" />
+			<!-- 全局拦截器 -->
+
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="checkUser">
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack">
+				</interceptor-ref>
+			</interceptor-stack>
+
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+	</package>
+	
+	<package name="appDefault" extends="struts-default" abstract="true">
+		<interceptors>
+			<interceptor name="appInterceptor" class="appInterceptor"/>
+			<!-- 全局拦截器 -->
+				
+			<interceptor-stack name="myStack"> 
+				<interceptor-ref name="appInterceptor"> </interceptor-ref> 
+				<interceptor-ref name="defaultStack"> </interceptor-ref> 
+			</interceptor-stack>
+			
+		</interceptors>
+		<default-interceptor-ref name="myStack"/>
+		<global-results>
+			<result name="input"></result>
+		</global-results>
+		
+		
+	</package><!--
+	  
+	<package name="aaa" namespace="/aaa" extends="struts-default">
+		<action name="newDiscount" class="userAppInterfaceAction" method="newDiscount">
+		</action>
+		最具人气 
+		<action name="getHotGoods" class="userAppInterfaceAction" method="getHotGoods">
+		</action>
+		明星同款 
+		<action name="getStreetShootingGoods" class="userAppInterfaceAction" method="getStreetShootingGoods">
+		</action>
+		商品列表 
+		<action name="getGoods" class="userAppInterfaceAction" method="getGoods">
+		</action>
+	</package>
+	--><package name="main" namespace="/" extends="default">
+		<action name="page" class="com.myBlaire.action.PageAction"
+			method="getPage">
+			<result name="success">/WEB-INF/pages/${module}/${resource}.jsp</result>
+		</action>
+		<!-- 第一次访问 -->
+		<action name="firstLoadPage" class="sysLoginAction" method="firstLoadPage">
+			<result name="input" type="redirect">login.jsp</result>
+			<result name="success">/WEB-INF/pages/common/index.jsp
+			</result>
+		</action>
+		<action name="login" class="sysLoginAction" method="login">
+			<result name="input">login.jsp</result>
+			<result name="success">/WEB-INF/pages/common/index.jsp
+			</result>
+		</action>
+		<action name="logout" class="sysLoginAction" method="logout"><!-- 登录 -->
+			<result name="success" type="redirect">/login.jsp</result>
+		</action>
+	</package>
+	<package name="upload" namespace="/" extends="struts-default">
+		<action name="upload" class="uploadAction" method="uploadFile">
+		</action>
+	</package>
+
+
+
+	<package name="dict" namespace="/dict" extends="default">
+		<!--字典列表  -->
+		<action name="getList" class="sysDictAction" method="getList">
+		</action>
+		<!--添加字典数据  -->
+		<action name="saveDict" class="sysDictAction" method="saveDict">
+		</action>
+		<!--修改字典数据  -->
+		<action name="editDict" class="sysDictAction" method="editDict">
+		</action>
+
+	</package>
+
+	<package name="keyword" namespace="/keyword" extends="default">
+		<!--关键字列表  -->
+		<action name="getList" class="keywordAction" method="getList">
+		</action>
+		<!--添加或修改关键字  -->
+		<action name="saveKeyWord" class="keywordAction" method="saveKeyWord">
+		</action>
+	</package>
+
+	<package name="user" namespace="/user" extends="default">
+		<!--会员用户列表  -->
+		<action name="getList" class="tUserAction" method="getList">
+		</action>
+		<!--保存会员用户  -->
+		<action name="saveUser" class="tUserAction" method="saveUser">
+		</action>
+		<!--用户收藏列表  -->
+		<action name="getCollectList" class="tUserAction" method="getCollectList">
+		</action>
+	</package>
+
+	<package name="goods" namespace="/goods" extends="default">
+		<!--商品列表  -->
+		<action name="getList" class="tGoodsAction" method="getList">
+		</action>
+		<!--获取颜色列表  -->
+		<action name="colorList" class="tGoodsAction" method="getColorList">
+		</action>
+		<!--保存商品  -->
+		<action name="save" class="tGoodsAction" method="saveGood">
+		</action>
+	</package>
+	<package name="feedback" namespace="/feedback" extends="default">
+		<!--吐槽列表  -->
+		<action name="getList" class="tFeedbackAction" method="getList">
+		</action>
+	</package>
+	<package name="app" namespace="/app" extends="appDefault">
+		<!--正常登录  -->
+		<action name="normalLogin" class="userNormalOperationAction" method="normalLogin">
+		</action>
+		<!--正常注册  -->
+		<action name="register" class="userNormalOperationAction" method="register">
+		</action>
+		<!--找回密码 -->
+		<action name="findPWD" class="userNormalOperationAction" method="findPWD">
+		</action>
+		<!--第三方登录 -->
+		<action name="thirdPartyLogin" class="userNormalOperationAction" method="thirdPartyLogin">
+		</action>
+		<!--获取关键字 -->
+		<action name="getKeyWord" class="userAppInterfaceAction" method="getKeyWord">
+		</action>
+		<!--最具人气 -->
+		<action name="getHotGoods" class="userAppInterfaceAction" method="getHotGoods">
+		</action>
+		<!--明星同款 -->
+		<action name="getStreetShootingGoods" class="userAppInterfaceAction" method="getStreetShootingGoods">
+		</action>
+		<!--商品列表 -->
+		<action name="getGoods" class="userAppInterfaceAction" method="getGoods">
+		</action>
+		<!--商品详细 -->
+		<action name="getGoodDetailed" class="userAppInterfaceAction" method="getGoodDetailed">
+		</action>
+		<!--收藏商品-->
+		<action name="collectGood" class="userAppInterfaceAction" method="collectGood">
+		</action>
+		<!--心愿订单-->
+		<action name="collectOrder" class="userAppInterfaceAction" method="collectOrder">
+		</action>
+		<!--意见反馈-->
+		<action name="saveFeedback" class="userAppInterfaceAction" method="saveFeedback">
+		</action>
+		<!-- 最新折扣 -->
+		<action name="newDiscount" class="userAppInterfaceAction" method="newDiscount">
+		</action>
+	</package>
+</struts>
